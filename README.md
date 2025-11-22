@@ -1,2 +1,14 @@
-# bi-portfolio
-Public portfolio of my BI &amp; data analytics projects (Power BI, SQL, Python).
+# BI & data analytics
+
+### Education
+
+### Work Experince
+- big project 1
+- big project 2
+- big project 3
+- big project 4
+
+### Projects
+1 Project
+2 Project
+3 Project
