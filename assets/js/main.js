@@ -107,41 +107,51 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    grid.innerHTML = list
-      .map((p) => {
-        const tagsHtml = p.tags
-          .map((tag) => `<span class="project-card__tag">${tag}</span>`)
-          .join("");
-
-        const links = [];
-        if (p.links.live)
-          links.push(
-            `<a href="${p.links.live}" target="_blank">🔗 View live dashboard</a>`
-          );
-        if (p.links.caseStudy)
-          links.push(
-            `<a href="${p.links.caseStudy}" target="_blank">📄 Case study</a>`
-          );
-        if (p.links.repo)
-          links.push(
-            `<a href="${p.links.repo}" target="_blank">💻 Source</a>`
-          );
-
-        const linksHtml = links.length
-          ? `<div class="project-card__links">${links.join(" · ")}</div>`
-          : "";
-
-        return `
-          <article class="project-card">
-            <h3 class="project-card__title">${p.title}</h3>
-            <div class="project-card__meta">${p.meta}</div>
-            <p class="project-card__descr">${p.description}</p>
-            <div class="project-card__tags">${tagsHtml}</div>
-            ${linksHtml}
-          </article>
-        `;
-      })
+grid.innerHTML = list
+  .map((p) => {
+    const tagsHtml = p.tags
+      .map((tag) => `<span class="project-card__tag">${tag}</span>`)
       .join("");
+
+    const links = [];
+    if (p.links.live)
+      links.push(
+        `<a href="${p.links.live}" target="_blank">🔗 View live dashboard</a>`
+      );
+    if (p.links.caseStudy)
+      links.push(
+        `<a href="${p.links.caseStudy}" target="_blank">📄 Case study</a>`
+      );
+    if (p.links.repo)
+      links.push(
+        `<a href="${p.links.repo}" target="_blank">💻 Source</a>`
+      );
+
+    const linksHtml = links.length
+      ? `<div class="project-card__links">${links.join(" · ")}</div>`
+      : "";
+
+    // 👇 НОВЕ: блок із картинкою (якщо є)
+    const imageHtml = p.image
+      ? `
+        <div class="project-card__thumb">
+          <img src="${p.image}" alt="${p.title} dashboard" />
+        </div>
+      `
+      : "";
+
+    return `
+      <article class="project-card">
+        ${imageHtml}
+        <h3 class="project-card__title">${p.title}</h3>
+        <div class="project-card__meta">${p.meta}</div>
+        <p class="project-card__descr">${p.description}</p>
+        <div class="project-card__tags">${tagsHtml}</div>
+        ${linksHtml}
+      </article>
+    `;
+  })
+  .join("");
   }
 
   function applyFilters() {
