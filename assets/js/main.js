@@ -43,6 +43,66 @@ const PROJECTS = [
       repo: ""
     }
   }
+  },
+  {
+    id: "cleaning-services",
+    title: "Cleaning Services Performance",
+    meta: "Power BI · Data modelling",
+    description:
+      "Analytics for cleaning requests and schedules: load per store, contractors performance and SLA breaches by zone and time.",
+    tags: ["Power BI", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  }
+  },
+  {
+    id: "cleaning-services",
+    title: "Cleaning Services Performance",
+    meta: "Power BI · Data modelling",
+    description:
+      "Analytics for cleaning requests and schedules: load per store, contractors performance and SLA breaches by zone and time.",
+    tags: ["Power BI", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  }
+  },
+  {
+    id: "cleaning-services",
+    title: "Cleaning Services Performance",
+    meta: "Power BI · Data modelling",
+    description:
+      "Analytics for cleaning requests and schedules: load per store, contractors performance and SLA breaches by zone and time.",
+    tags: ["Power BI", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  }
+  },
+  {
+    id: "cleaning-services",
+    title: "Cleaning Services Performance",
+    meta: "Power BI · Data modelling",
+    description:
+      "Analytics for cleaning requests and schedules: load per store, contractors performance and SLA breaches by zone and time.",
+    tags: ["Power BI", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  }
   // Далі спокійно додаєш ще 10+ проєктів у такому ж форматі
 ];
 
