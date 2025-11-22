@@ -59,4 +59,158 @@
             </div>
 
             <div class="hero__tags">
-                <span class="hero__tag">Power BI · DAX
+                <span class="hero__tag">Power BI · DAX · Power Query</span>
+                <span class="hero__tag">SQL Server · T-SQL</span>
+                <span class="hero__tag">SSRS & Reporting</span>
+                <span class="hero__tag">Data modelling & KPIs</span>
+            </div>
+        </section>
+
+        <aside class="hero-card">
+            <div class="hero-card__chip">
+                🔍 Data-driven problem solver
+            </div>
+
+            <div class="hero-card__avatar-wrap">
+                <div class="hero-card__avatar-inner">
+                    <!-- Можеш замінити на фото:
+                    <img src="assets/img/profile.jpg" alt="Pavlo Kondes" class="hero-card__avatar-img" />
+                    -->
+                    <span>PK</span>
+                </div>
+            </div>
+
+            <div class="hero-card__skills">
+                <div class="hero-card__pill">
+                    <strong>Retail & operations</strong>
+                    Cash desks, SCO, service desk, cleaning, safety, reclamations.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>Tech stack</strong>
+                    SQL Server, Power BI, SSRS, Python (pandas), Git, GitHub.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>From raw to report</strong>
+                    Data modelling, incremental loads, DAX measures, RLS.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>Collaboration</strong>
+                    Close work with business, clear documentation, mentoring.
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section section--projects">
+        <div class="section__header">
+            <div>
+                <h2 class="section__title">Selected projects</h2>
+                <p class="section__subtitle">
+                    Below are some of my BI & data analytics projects. Use search and filters to explore.
+                </p>
+            </div>
+            <div class="projects__controls">
+                <input
+                    id="project-search"
+                    type="text"
+                    class="projects__search"
+                    placeholder="Search by title, tech or description..."
+                />
+                <div class="projects__filters">
+                    <button class="filter-btn filter-btn--active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="powerbi">Power BI</button>
+                    <button class="filter-btn" data-filter="sql">SQL</button>
+                    <button class="filter-btn" data-filter="python">Python</button>
+                    <button class="filter-btn" data-filter="operations">Operations</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects-grid" class="projects-grid">
+            <!-- JS намалює картки тут -->
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+        <h2 class="section__title">Tech & domain skills</h2>
+        <p class="section__subtitle">
+            Tools and areas I use most often in my daily work.
+        </p>
+
+        <div class="skills-list">
+            <span>SQL Server · T-SQL</span>
+            <span>Power BI · DAX</span>
+            <span>Power Query · M</span>
+            <span>SSRS / Report Builder</span>
+            <span>Data modelling · Star schema</span>
+            <span>ETL · Incremental refresh</span>
+            <span>Python · pandas</span>
+            <span>Git · GitHub</span>
+            <span>Retail & operations analytics</span>
+            <span>Incident / ticket analytics</span>
+            <span>Reclamation & warranty</span>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <h2 class="section__title">About</h2>
+        <p class="section__subtitle">
+            A bit more context about my background.
+        </p>
+        <p class="section__text">
+            I have over 10 years of experience working with data in large retail and service companies.
+            I started with Excel and slowly moved into SQL, SSRS and finally Power BI.
+            Today I design and maintain BI solutions for operations, safety, ITSM and reclamations —
+            from raw operational tables to clean semantic models and dashboards.
+            I enjoy mentoring analysts and helping teams ask better questions to their data.
+        </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+        <h2 class="section__title">Let’s work together</h2>
+        <p class="section__subtitle">
+            The fastest way to reach me is email or LinkedIn.
+        </p>
+
+        <div class="contact-card">
+            <div>
+                <p class="section__text">
+                    I’m open to remote cooperation as a Senior BI / Data Analyst:
+                    part-time, project-based or consulting. If you have messy data
+                    around operations, tickets, incidents or retail performance —
+                    that’s exactly my comfort zone.
+                </p>
+            </div>
+            <div>
+                <div class="contact-card__item">
+                    📧 Email:
+                    <!-- TODO: свій мейл -->
+                    <a href="mailto:your.email@example.com">your.email@example.com</a>
+                </div>
+                <div class="contact-card__item">
+                    💼 LinkedIn:
+                    <!-- TODO: свій LinkedIn -->
+                    <a href="https://www.linkedin.com/in/your-profile" target="_blank">
+                        linkedin.com/in/your-profile
+                    </a>
+                </div>
+                <div class="contact-card__item">
+                    🌍 Location: Kyiv, Ukraine · Remote
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © <span id="year"></span> Pavlo Kondes · Built with GitHub Pages
+    </footer>
+
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
