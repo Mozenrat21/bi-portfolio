@@ -1,42 +1,147 @@
+// Дані проєктів — тут додаєш / редагуєш свої кейси
+const PROJECTS = [
+  {
+    id: "reclamation",
+    title: "Reclamation Analytics Dashboard",
+    meta: "Power BI · SQL Server · Retail service",
+    description:
+      "End-to-end BI solution to track reclamation requests, SLA, overdue cases and financial impact per branch, supplier and product group.",
+    tags: ["Power BI", "SQL", "Retail", "Operations"],
+    // для фільтрів
+    filters: ["powerbi", "sql", "operations"],
+    links: {
+      live: "#", // TODO: link на Power BI або інший хостинг
+      caseStudy: "#", // TODO: стаття в блозі / Notion
+      repo: "" // якщо є окремий репо
+    }
+  },
+  {
+    id: "available-registers",
+    title: "Cash Registers Availability Monitoring",
+    meta: "Power BI · SSRS · Operations",
+    description:
+      "Monitoring of SCO and POS availability: incidents, downtime reasons and branches with the highest business risk.",
+    tags: ["Power BI", "SSRS", "Incidents", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  },
+  {
+    id: "cleaning-services",
+    title: "Cleaning Services Performance",
+    meta: "Power BI · Data modelling",
+    description:
+      "Analytics for cleaning requests and schedules: load per store, contractors performance and SLA breaches by zone and time.",
+    tags: ["Power BI", "Operations"],
+    filters: ["powerbi", "operations"],
+    links: {
+      live: "#",
+      caseStudy: "",
+      repo: ""
+    }
+  }
+  // Далі спокійно додаєш ще 10+ проєктів у такому ж форматі
+];
+
 document.addEventListener("DOMContentLoaded", () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  const grid = document.getElementById("projects-grid");
   const searchInput = document.getElementById("project-search");
-  const chips = document.querySelectorAll("#tech-filters .chip");
-  const cards = document.querySelectorAll("#projects-grid .project-card");
+  const filterButtons = document.querySelectorAll(".filter-btn");
 
-  if (!searchInput || !chips.length || !cards.length) return;
+  let activeFilter = "all";
 
-  let activeTech = "all";
+  function renderProjects(list) {
+    if (!grid) return;
 
-  const applyFilters = () => {
-    const q = searchInput.value.trim().toLowerCase();
+    if (!list.length) {
+      grid.innerHTML =
+        '<p style="color:#b0b3c1;font-size:0.9rem;">Nothing found. Try another search or filter.</p>';
+      return;
+    }
 
-    cards.forEach(card => {
-      const tech = (card.dataset.tech || "").toLowerCase();
-      const title = card.dataset.title || "";
-      const descr = card.dataset.description || "";
+    grid.innerHTML = list
+      .map((p) => {
+        const tagsHtml = p.tags
+          .map((tag) => `<span class="project-card__tag">${tag}</span>`)
+          .join("");
 
-      const matchText =
-        !q || title.includes(q) || descr.includes(q);
+        const links = [];
+        if (p.links.live)
+          links.push(
+            `<a href="${p.links.live}" target="_blank">🔗 View live dashboard</a>`
+          );
+        if (p.links.caseStudy)
+          links.push(
+            `<a href="${p.links.caseStudy}" target="_blank">📄 Case study</a>`
+          );
+        if (p.links.repo)
+          links.push(
+            `<a href="${p.links.repo}" target="_blank">💻 Source</a>`
+          );
 
-      const matchTech =
-        activeTech === "all" ||
-        tech.split(",").map(s => s.trim().toLowerCase()).includes(activeTech.toLowerCase());
+        const linksHtml = links.length
+          ? `<div class="project-card__links">${links.join(" · ")}</div>`
+          : "";
 
-      card.style.display = matchText && matchTech ? "" : "none";
+        return `
+          <article class="project-card">
+            <h3 class="project-card__title">${p.title}</h3>
+            <div class="project-card__meta">${p.meta}</div>
+            <p class="project-card__descr">${p.description}</p>
+            <div class="project-card__tags">${tagsHtml}</div>
+            ${linksHtml}
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function applyFilters() {
+    const term = (searchInput?.value || "").trim().toLowerCase();
+
+    const filtered = PROJECTS.filter((p) => {
+      // фільтр по кнопці
+      const byFilter =
+        activeFilter === "all" || p.filters.includes(activeFilter);
+
+      // пошук по назві / опису / meta / тегам
+      const haystack = (
+        p.title +
+        " " +
+        p.meta +
+        " " +
+        p.description +
+        " " +
+        p.tags.join(" ")
+      ).toLowerCase();
+      const bySearch = !term || haystack.includes(term);
+
+      return byFilter && bySearch;
     });
-  };
 
-  searchInput.addEventListener("input", applyFilters);
+    renderProjects(filtered);
+  }
 
-  chips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      chips.forEach(c => c.classList.remove("chip--active"));
-      chip.classList.add("chip--active");
-      activeTech = chip.dataset.tech || "all";
+  // обробники фільтрів
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach((b) => b.classList.remove("filter-btn--active"));
+      btn.classList.add("filter-btn--active");
+      activeFilter = btn.dataset.filter || "all";
       applyFilters();
     });
   });
+
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilters);
+  }
+
+  // перший рендер
+  renderProjects(PROJECTS);
 });
