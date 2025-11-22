@@ -1,41 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a Personal Portfolio Website using HTML and CSS | Codehal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pavlo Kondes — BI & Data Analytics Portfolio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-secondary: #0b1020;
+            --accent: #56b6ff;
+            --accent-soft: rgba(86, 182, 255, 0.15);
+            --text-main: #f5f5f5;
+            --text-muted: #b0b3c1;
+            --border-soft: #23263a;
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.55);
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --transition-fast: 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #151b3c 0, #050816 45%, #02020a 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 18px 48px;
+        }
+
+        /* NAVBAR */
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .nav__logo {
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav__logo-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 10px rgba(86, 182, 255, 0.8);
+        }
+
+        .nav__links {
+            display: flex;
+            gap: 18px;
+            font-size: 0.9rem;
+        }
+
+        .nav__link {
+            position: relative;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .nav__link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), #9b6bff);
+            transition: width var(--transition-fast);
+        }
+
+        .nav__link:hover {
+            color: var(--text-main);
+        }
+
+        .nav__link:hover::after {
+            width: 100%;
+        }
+
+        /* HERO */
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(260px, 1.4fr);
+            gap: 36px;
+            align-items: center;
+            margin-bottom: 56px;
+        }
+
+        .hero__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px 4px 4px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: rgba(5, 8, 22, 0.8);
+            margin-bottom: 18px;
+        }
+
+        .hero__badge-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, #6bff8f 0, #23b45d 40%, #0b6b34 100%);
+            box-shadow: 0 0 14px rgba(74, 222, 128, 0.9);
+        }
+
+        .hero__badge-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .hero__title {
+            font-size: clamp(2.1rem, 3vw + 1.6rem, 3rem);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .hero__title span {
+            color: var(--accent);
+        }
+
+        .hero__subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .hero__descr {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin-bottom: 24px;
+        }
+
+        .hero__buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+        }
+
+        .btn--primary {
+            background: linear-gradient(135deg, var(--accent), #9b6bff);
+            color: #050816;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn--primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 26px 52px rgba(0, 0, 0, 0.75);
+        }
+
+        .btn--ghost {
+            background: rgba(5, 8, 22, 0.7);
+            color: var(--text-main);
+            border-color: var(--border-soft);
+        }
+
+        .btn--ghost:hover {
+            border-color: var(--accent);
+            background: rgba(86, 182, 255, 0.06);
+        }
+
+        .hero__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+
+        .hero__tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(11, 16, 32, 0.9);
+            border: 1px solid #252b40;
+            color: var(--text-muted);
+        }
+
+        /* HERO IMAGE / CARD */
+
+        .hero-card {
+            position: relative;
+            border-radius: var(--radius-xl);
+            background: radial-gradient(circle at top, #273785 0, #050816 50%, #02020a 100%);
+            padding: 22px 22px 24px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: -80px;
+            opacity: 0.12;
+            background: radial-gradient(circle at 20% 0, #56b6ff 0, transparent 55%),
+                        radial-gradient(circle at 90% 120%, #9b6bff 0, transparent 55%);
+            pointer-events: none;
+        }
+
+        .hero-card__chip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .hero-card__avatar-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto 18px;
+            aspect-ratio: 1 / 1;
+            border-radius: 999px;
+            padding: 6px;
+            background: linear-gradient(135deg, #56b6ff, #9b6bff);
+        }
+
+        .hero-card__avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: radial-gradient(circle at 20% 0, #1a2046 0, #050816 55%, #02020a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-card__avatar-inner span {
+            font-size: 4rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+        .hero-card__skills {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .hero-card__pill {
+            padding: 7px 10px;
+            border-radius: 12px;
+            background: rgba(5, 8, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+        }
+
+        .hero-card__pill strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 0.86rem;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            margin-bottom: 44px;
+        }
+
+        .section__title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .section__subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* PROJECTS */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            padding: 14px 16px 16px;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+            transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: #111628;
+            box-shadow: 0 22px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .project-card__title {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .project-card__meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .project-card__descr {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .project-card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+        }
+
+        .project-card__tag {
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #b5dcff;
+        }
+
+        .project-card__links a {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* SKILLS */
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.78rem;
+        }
+
+        .skills-list span {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(9, 12, 30, 0.95);
+            border: 1px solid #23263a;
+            color: var(--text-muted);
+        }
+
+        /* CONTACT */
+
+        .contact-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            padding: 16px 18px;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+            gap: 16px;
+            align-items: center;
+        }
+
+        .contact-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .contact-card__item {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .contact-card__item a {
+            color: var(--accent);
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 840px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .hero-card {
+                order: -1;
+            }
+            .contact-card {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .nav__links {
+                display: none;
+            }
+            .page {
+                padding-inline: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h2 class="logo"><span>J</span>oe.</h2>
-        <nav class="navigation">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Blog</a>
-            <a href="#">Contact</a>
+<div class="page">
+
+    <!-- NAVBAR -->
+    <header class="nav">
+        <div class="nav__logo">
+            <span class="nav__logo-dot"></span>
+            P. Kondes
+        </div>
+        <nav class="nav__links">
+            <a href="#projects" class="nav__link">Projects</a>
+            <a href="#skills" class="nav__link">Skills</a>
+            <a href="#about" class="nav__link">About</a>
+            <a href="#contact" class="nav__link">Contact</a>
         </nav>
-        <a href="#" class="btn-talk">Let's Talk</a>
     </header>
-    <section class="home">
-        <div class="content">
-            <h2>Hi, I'm <span>Joe Greyson</span></h2>
-            <h4>Frontend Developer</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A esse totam provident voluptas similique.
-                Impedit incidunt atque recusandae rem quam.</p>
-            <div class="btn-group">
-                <a href="#">Hire Me</a>
-                <a href="#">See Projects</a>
+
+    <!-- HERO -->
+    <main class="hero">
+        <section>
+            <div class="hero__badge">
+                <div class="hero__badge-dot"></div>
+                <span class="hero__badge-text">Available for remote part-time & project work</span>
             </div>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+
+            <h1 class="hero__title">
+                Hi, I'm <span>Pavlo Kondes</span><br />
+                Senior BI & Data Analyst
+            </h1>
+
+            <p class="hero__subtitle">
+                I help companies turn operational chaos into clear dashboards and decisions.
+            </p>
+
+            <p class="hero__descr">
+                I build end-to-end analytics solutions with SQL Server, Power BI and SSRS:
+                from data modelling and ETL to interactive reports for business teams.
+                My focus is on retail, service operations and incident/reclamation analytics.
+            </p>
+
+            <div class="hero__buttons">
+                <a class="btn btn--primary" href="#" target="_blank">
+                    📄 Download CV
+                </a>
+                <a class="btn btn--ghost" href="#contact">
+                    ✉️ Let’s talk about your data
+                </a>
+            </div>
+
+            <div class="hero__tags">
+                <span class="hero__tag">Power BI · DAX · Power Query</span>
+                <span class="hero__tag">SQL Server · T-SQL · ETL</span>
+                <span class="hero__tag">SSRS & Reporting</span>
+                <span class="hero__tag">Data modelling & KPIs</span>
+            </div>
+        </section>
+
+        <aside class="hero-card">
+            <div class="hero-card__chip">
+                🔍 Data-driven problem solver
+            </div>
+
+            <div class="hero-card__avatar-wrap">
+                <div class="hero-card__avatar-inner">
+                    <!-- Тут можна замінити на фото <img src="assets/img/profile.jpg" alt="Pavlo Kondes" /> -->
+                    <span>PK</span>
+                </div>
+            </div>
+
+            <div class="hero-card__skills">
+                <div class="hero-card__pill">
+                    <strong>Retail & operations</strong>
+                    Cash desks, SCO, service desk, cleaning, safety, reclamations.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>Tech stack</strong>
+                    SQL Server, Power BI, SSRS, Python (pandas), Git, GitHub.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>From raw to report</strong>
+                    Data modelling, incremental loads, DAX measures, RLS.
+                </div>
+                <div class="hero-card__pill">
+                    <strong>Collaboration</strong>
+                    Close work with business, clear documentation, mentoring.
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+        <h2 class="section__title">Selected projects</h2>
+        <p class="section__subtitle">
+            A few examples of dashboards and analytics solutions I’ve built. Data is anonymised / mocked.
+        </p>
+
+        <div class="projects-grid">
+
+            <article class="project-card">
+                <h3 class="project-card__title">Reclamation Analytics Dashboard</h3>
+                <div class="project-card__meta">Power BI · SQL Server · Retail service</div>
+                <p class="project-card__descr">
+                    End-to-end BI solution to track reclamation requests, SLA, overdue cases and financial impact
+                    per branch, supplier and product group.
+                </p>
+                <div class="project-card__tags">
+                    <span class="project-card__tag">SLA monitoring</span>
+                    <span class="project-card__tag">Incremental loads</span>
+                    <span class="project-card__tag">Role-based access</span>
+                </div>
+                <div class="project-card__links">
+                    <a href="#" target="_blank">🔗 View live dashboard</a> ·
+                    <a href="#" target="_blank">📄 Case study</a>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <h3 class="project-card__title">Cash Registers Availability Monitoring</h3>
+                <div class="project-card__meta">Power BI · SSRS · Operations</div>
+                <p class="project-card__descr">
+                    Monitoring of SCO and POS availability: incidents, downtime reasons and branches with
+                    the highest business risk.
+                </p>
+                <div class="project-card__tags">
+                    <span class="project-card__tag">Uptime KPIs</span>
+                    <span class="project-card__tag">Incident analytics</span>
+                    <span class="project-card__tag">Custom visuals</span>
+                </div>
+                <div class="project-card__links">
+                    <a href="#" target="_blank">🔗 View live dashboard</a>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <h3 class="project-card__title">Cleaning Services Performance</h3>
+                <div class="project-card__meta">Power BI · Data modelling</div>
+                <p class="project-card__descr">
+                    Analytics for cleaning requests and schedules: load per store, contractors performance and
+                    SLA breaches by zone and time.
+                </p>
+                <div class="project-card__tags">
+                    <span class="project-card__tag">Operations analytics</span>
+                    <span class="project-card__tag">Multi-source model</span>
+                </div>
+                <div class="project-card__links">
+                    <a href="#" target="_blank">🔗 View dashboard mock</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+        <h2 class="section__title">Tech & domain skills</h2>
+        <p class="section__subtitle">
+            Tools I use most often in my daily work.
+        </p>
+
+        <div class="skills-list">
+            <span>SQL Server · T-SQL</span>
+            <span>Power BI · DAX</span>
+            <span>Power Query · M</span>
+            <span>SSRS / Report Builder</span>
+            <span>Data modelling · Star schema</span>
+            <span>ETL · Incremental refresh</span>
+            <span>Python · pandas</span>
+            <span>Git · GitHub</span>
+            <span>Retail & operations analytics</span>
+            <span>Incident / ticket analytics</span>
+            <span>Reclamation & warranty</span>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <h2 class="section__title">About</h2>
+        <p class="section__subtitle">
+            A bit more context about my background.
+        </p>
+        <p style="font-size:0.92rem; color:var(--text-muted); max-width:780px;">
+            I have over 10 years of experience working with data in large retail and service companies.
+            I started with Excel and slowly moved into SQL, SSRS and finally Power BI. Today I design and
+            maintain BI solutions for operations, safety, ITSM and reclamations — from raw operational tables
+            to clean semantic models and dashboards. I enjoy mentoring analysts and helping teams ask
+            better questions to their data.
+        </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+        <h2 class="section__title">Let’s work together</h2>
+        <p class="section__subtitle">
+            The fastest way to reach me is email or LinkedIn.
+        </p>
+
+        <div class="contact-card">
+            <div>
+                <p>
+                    I’m open to remote cooperation as a Senior BI / Data Analyst:
+                    part-time, project-based or consulting. If you have messy data
+                    around operations, tickets, incidents or retail performance —
+                    that’s exactly my comfort zone.
+                </p>
+            </div>
+            <div>
+                <div class="contact-card__item">
+                    📧 Email:
+                    <a href="mailto:your.email@example.com">your.email@example.com</a>
+                </div>
+                <div class="contact-card__item">
+                    💼 LinkedIn:
+                    <a href="https://www.linkedin.com/in/your-profile" target="_blank">
+                        linkedin.com/in/your-profile
+                    </a>
+                </div>
+                <div class="contact-card__item">
+                    🌍 Location: Kyiv, Ukraine · Remote
+                </div>
             </div>
         </div>
     </section>
+
+    <footer class="footer">
+        © <span id="year"></span> Pavlo Kondes · Built with GitHub Pages
+    </footer>
+
+</div>
+
+<script>
+    // поточний рік у футері
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
