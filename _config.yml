@@ -1,12 +1,1 @@
-title: Pavlo Kondes — BI & Data Analytics
-description: Portfolio of BI & data analytics projects
-baseurl: ""          # для user/репо-pages скоріш за все пусто
-url: "https://mozenrat21.github.io"
 
-theme: null          # бо використовуємо свої layout'и, а не готову тему
-markdown: kramdown
-
-collections:
-  projects:
-    output: true
-    permalink: /projects/:name/
