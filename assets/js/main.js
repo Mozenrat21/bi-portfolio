@@ -9,6 +9,7 @@ const PROJECTS = [
     tags: ["Power BI", "SQL", "Retail", "Operations"],
     // для фільтрів
     filters: ["powerbi", "sql", "operations"],
+    image: "assets/img/projects/image.png",
     links: {
       live: "#", // TODO: link на Power BI або інший хостинг
       caseStudy: "#", // TODO: стаття в блозі / Notion
