@@ -535,3 +535,19 @@ a {
         padding-inline: 16px;
     }
 }
+
+.project-card__thumb {
+    border-radius: 14px;
+    overflow: hidden;
+    margin: -4px -4px 10px;
+    border: 1px solid #23263a;
+    background: #050816;
+}
+
+.project-card__thumb img {
+    display: block;
+    width: 100%;
+    height: 160px;          /* можна підкрутити */
+    object-fit: cover;      /* «обрізає» акуратно */
+}
+
