@@ -8,11 +8,11 @@ const PROJECTS = [
       "End-to-end BI solution to track reclamation requests, SLA, overdue cases and financial impact per branch, supplier and product group.",
     tags: ["Power BI", "SQL", "Retail", "Operations"],
     filters: ["powerbi", "sql", "operations"],
-    image: "assets/img/projects/reclamation.png", // TODO: заміни на реальний скрін
+    image: "assets/img/projects/reclamation.png",
     links: {
-      live: "#",        // TODO: link на Power BI / інший хостинг
-      caseStudy: "#",   // TODO: стаття в блозі / Notion
-      repo: ""          // TODO: репозиторій, якщо буде
+      live: "#",
+      caseStudy: "#",
+      repo: ""
     }
   },
   {
@@ -94,15 +94,73 @@ const PROJECTS = [
 
 document.addEventListener("DOMContentLoaded", () => {
   const yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   const grid = document.getElementById("projects-grid");
   const searchInput = document.getElementById("project-search");
   const filterButtons = document.querySelectorAll(".filter-btn");
 
+  // елементи модалки
+  const modal = document.getElementById("project-modal");
+  const modalImage = document.getElementById("modal-image");
+  const modalTitle = document.getElementById("modal-title");
+  const modalMeta = document.getElementById("modal-meta");
+  const modalDescription = document.getElementById("modal-description");
+  const modalTags = document.getElementById("modal-tags");
+  const modalLinks = document.getElementById("modal-links");
+  const modalCloseBtn = modal?.querySelector(".modal__close");
+
   let activeFilter = "all";
+
+  function openProjectModal(projectId) {
+    if (!modal) return;
+    const project = PROJECTS.find((p) => p.id === projectId);
+    if (!project) return;
+
+    // наповнюємо контент
+    modalTitle.textContent = project.title;
+    modalMeta.textContent = project.meta;
+    modalDescription.textContent = project.description;
+
+    if (project.image) {
+      modalImage.src = project.image;
+      modalImage.alt = project.title + " dashboard";
+      modalImage.style.display = "block";
+    } else {
+      modalImage.style.display = "none";
+    }
+
+    modalTags.innerHTML = project.tags
+      .map((tag) => `<span>${tag}</span>`)
+      .join("");
+
+    const links = [];
+    if (project.links.live) {
+      links.push(
+        `<a href="${project.links.live}" target="_blank">🔗 View live dashboard</a>`
+      );
+    }
+    if (project.links.caseStudy) {
+      links.push(
+        `<a href="${project.links.caseStudy}" target="_blank">📄 Case study</a>`
+      );
+    }
+    if (project.links.repo) {
+      links.push(
+        `<a href="${project.links.repo}" target="_blank">💻 Source</a>`
+      );
+    }
+    modalLinks.innerHTML = links.join(" · ");
+
+    modal.classList.add("modal--open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeProjectModal() {
+    if (!modal) return;
+    modal.classList.remove("modal--open");
+    document.body.style.overflow = "";
+  }
 
   function renderProjects(list) {
     if (!grid) return;
@@ -149,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
           : "";
 
         return `
-          <article class="project-card">
+          <article class="project-card" data-id="${p.id}">
             ${imageHtml}
             <h3 class="project-card__title">${p.title}</h3>
             <div class="project-card__meta">${p.meta}</div>
@@ -160,17 +218,27 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       })
       .join("");
+
+    // додаємо обробник кліку на картку
+    const cards = grid.querySelectorAll(".project-card");
+    cards.forEach((card) => {
+      card.addEventListener("click", (e) => {
+        // якщо клік по лінку — даємо йому спокій
+        if (e.target.tagName.toLowerCase() === "a") return;
+
+        const id = card.getAttribute("data-id");
+        if (id) openProjectModal(id);
+      });
+    });
   }
 
   function applyFilters() {
     const term = (searchInput?.value || "").trim().toLowerCase();
 
     const filtered = PROJECTS.filter((p) => {
-      // фільтр по кнопці
       const byFilter =
         activeFilter === "all" || p.filters.includes(activeFilter);
 
-      // пошук по назві / опису / meta / тегам
       const haystack = (
         p.title +
         " " +
@@ -188,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProjects(filtered);
   }
 
-  // обробники фільтрів
+  // фільтри
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       filterButtons.forEach((b) => b.classList.remove("filter-btn--active"));
@@ -200,6 +268,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (searchInput) {
     searchInput.addEventListener("input", applyFilters);
+  }
+
+  // закриття модалки
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeProjectModal);
+  }
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target.classList.contains("modal__backdrop")) {
+        closeProjectModal();
+      }
+    });
   }
 
   // перший рендер
