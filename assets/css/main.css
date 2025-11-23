@@ -412,6 +412,7 @@ a {
         border-color var(--transition-fast),
         box-shadow var(--transition-fast),
         background var(--transition-fast);
+    cursor: pointer;
 }
 
 .project-card:hover {
@@ -419,6 +420,21 @@ a {
     border-color: var(--accent);
     background: #111628;
     box-shadow: 0 22px 40px rgba(0, 0, 0, 0.7);
+}
+
+.project-card__thumb {
+    border-radius: 14px;
+    overflow: hidden;
+    margin: -4px -4px 10px;
+    border: 1px solid #23263a;
+    background: #050816;
+}
+
+.project-card__thumb img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
 }
 
 .project-card__title {
@@ -512,45 +528,6 @@ a {
     text-align: center;
     opacity: 0.8;
 }
-
-/* RESPONSIVE */
-
-@media (max-width: 840px) {
-    .hero {
-        grid-template-columns: minmax(0, 1fr);
-    }
-    .hero-card {
-        order: -1;
-    }
-    .contact-card {
-        grid-template-columns: minmax(0, 1fr);
-    }
-}
-
-@media (max-width: 560px) {
-    .nav__links {
-        display: none;
-    }
-    .page {
-        padding-inline: 16px;
-    }
-}
-
-.project-card__thumb {
-    border-radius: 14px;
-    overflow: hidden;
-    margin: -4px -4px 10px;
-    border: 1px solid #23263a;
-    background: #050816;
-}
-
-.project-card__thumb img {
-    display: block;
-    width: 100%;
-    height: 160px;          /* можна підкрутити */
-    object-fit: cover;      /* «обрізає» акуратно */
-}
-
 
 /* MODAL */
 
@@ -669,7 +646,50 @@ a {
     color: var(--accent);
 }
 
-/* адаптація */
+.modal__nav {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.modal__nav-btn {
+    flex: 1 1 0;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border-soft);
+    background: rgba(9, 12, 30, 0.95);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.modal__nav-btn:hover {
+    border-color: var(--accent);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 840px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .hero-card {
+        order: -1;
+    }
+    .contact-card {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 @media (max-width: 720px) {
     .modal__body {
         grid-template-columns: minmax(0, 1fr);
@@ -680,3 +700,11 @@ a {
     }
 }
 
+@media (max-width: 560px) {
+    .nav__links {
+        display: none;
+    }
+    .page {
+        padding-inline: 16px;
+    }
+}
