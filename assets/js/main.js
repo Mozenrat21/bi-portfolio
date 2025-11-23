@@ -109,15 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalTags = document.getElementById("modal-tags");
   const modalLinks = document.getElementById("modal-links");
   const modalCloseBtn = modal?.querySelector(".modal__close");
+  const modalPrevBtn = document.getElementById("modal-prev");
+  const modalNextBtn = document.getElementById("modal-next");
 
   let activeFilter = "all";
+  let currentProjectIndex = -1; // індекс проєкту, відкритого в модалці
 
-  function openProjectModal(projectId) {
-    if (!modal) return;
-    const project = PROJECTS.find((p) => p.id === projectId);
-    if (!project) return;
-
-    // наповнюємо контент
+  function fillModal(project) {
     modalTitle.textContent = project.title;
     modalMeta.textContent = project.meta;
     modalDescription.textContent = project.description;
@@ -151,15 +149,45 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
     modalLinks.innerHTML = links.join(" · ");
+  }
+
+  function openProjectByIndex(index) {
+    if (!modal) return;
+    if (index < 0 || index >= PROJECTS.length) return;
+
+    currentProjectIndex = index;
+    const project = PROJECTS[index];
+
+    fillModal(project);
 
     modal.classList.add("modal--open");
     document.body.style.overflow = "hidden";
+  }
+
+  function openProjectById(id) {
+    const index = PROJECTS.findIndex((p) => p.id === id);
+    if (index === -1) return;
+    openProjectByIndex(index);
   }
 
   function closeProjectModal() {
     if (!modal) return;
     modal.classList.remove("modal--open");
     document.body.style.overflow = "";
+    currentProjectIndex = -1;
+  }
+
+  function showPrevProject() {
+    if (currentProjectIndex === -1) return;
+    const nextIndex =
+      (currentProjectIndex - 1 + PROJECTS.length) % PROJECTS.length;
+    openProjectByIndex(nextIndex);
+  }
+
+  function showNextProject() {
+    if (currentProjectIndex === -1) return;
+    const nextIndex = (currentProjectIndex + 1) % PROJECTS.length;
+    openProjectByIndex(nextIndex);
   }
 
   function renderProjects(list) {
@@ -219,15 +247,14 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("");
 
-    // додаємо обробник кліку на картку
+    // клік по картці відкриває модалку (крім кліку по лінках)
     const cards = grid.querySelectorAll(".project-card");
     cards.forEach((card) => {
       card.addEventListener("click", (e) => {
-        // якщо клік по лінку — даємо йому спокій
         if (e.target.tagName.toLowerCase() === "a") return;
 
         const id = card.getAttribute("data-id");
-        if (id) openProjectModal(id);
+        if (id) openProjectById(id);
       });
     });
   }
@@ -272,7 +299,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // закриття модалки
   if (modalCloseBtn) {
-    modalCloseBtn.addEventListener("click", closeProjectModal);
+    modalCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeProjectModal();
+    });
   }
   if (modal) {
     modal.addEventListener("click", (e) => {
@@ -281,6 +311,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // навігація в модалці
+  if (modalPrevBtn) {
+    modalPrevBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showPrevProject();
+    });
+  }
+  if (modalNextBtn) {
+    modalNextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showNextProject();
+    });
+  }
+
+  // клавіатура: Esc / ← / →
+  window.addEventListener("keydown", (e) => {
+    if (!modal || !modal.classList.contains("modal--open")) return;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeProjectModal();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      showPrevProject();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      showNextProject();
+    }
+  });
 
   // перший рендер
   renderProjects(PROJECTS);
